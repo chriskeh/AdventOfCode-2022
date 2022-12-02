@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DAY=$1
+
+[ ! -d day${DAY} ] && mkdir day${DAY}
+[ ! -f day${DAY}/part1.py ] && cp templates/part1.py day${DAY}/part1.py
+[ ! -f day${DAY}/part1.data ] && touch day${DAY}/part1.data
+[ ! -f day${DAY}/part1_test.data ] && touch day${DAY}/part1_test.data
+[ ! -f day${DAY}/test_part1.py ] && cp templates/test_part1.py day${DAY}/test_part1.py
