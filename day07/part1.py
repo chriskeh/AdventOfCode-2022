@@ -43,6 +43,16 @@ def sum_small_dirs(verzeichnis, sum, max):
     return sum
 
 
+def find_kandidaten(verzeichnis, optionen, missing):
+    for ding in verzeichnis.children.values():
+        if ding.art == "dir":
+            optionen = find_kandidaten(ding, optionen, missing)
+
+    if verzeichnis.groesse > missing:
+        optionen.update({verzeichnis.name: verzeichnis.groesse})
+
+    return optionen
+
 def main():
 
     # Build the tree
@@ -82,7 +92,25 @@ def main():
     max_groesse = 100000
     total = sum_small_dirs(wurzel, 0, max_groesse)
 
-    print(total)
+    print("Part 1: {}".format(total))
+
+    total_disk = 70000000
+    min_free = 30000000
+    currently_used = wurzel.groesse
+    currently_free = total_disk - currently_used
+    missing = min_free - currently_free
+
+    # Part 2
+    kandidaten = {}
+    kandidaten = find_kandidaten(wurzel, kandidaten, missing)
+
+    werte = kandidaten.values()
+    ergebnis_liste = list(kandidaten.values())
+    ergebnis_liste.sort()
+    print("Part 2: {}".format(ergebnis_liste[0]))
+
+
+
 
 
 if __name__ == "__main__":
